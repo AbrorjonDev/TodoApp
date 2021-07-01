@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <form action="{% url 'todo_create' %}" method="post">
+        <fieldset>
+            <legend>New todo adding</legend>
+            {% csrf_token %}
+            {{ form|crispy }}   <!-- cross-site-requet-furgery -->
+
+        </fieldset>
+        <button class="btn btn-outline-info" type="submit">Add to list</button>
+    </form>
+{% endblock %}

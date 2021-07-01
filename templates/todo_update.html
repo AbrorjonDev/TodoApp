@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div>
+        <form method="POST">
+            <fieldset class="form-group">
+                <legend class="mb-auto">Todo Altering Process</legend>
+                {% csrf_token %}
+                {{ form|crispy}}
+            </fieldset>
+            <div class=form-group>
+                <button class="btn btn-outline-success">Update task</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

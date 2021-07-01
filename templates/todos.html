@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if not user.is_authenticated %}
+    <div class="alert alert-warning">
+        You haven't authenticated yet.Please "sign In" or "sign Up"(If you are new to us) initially.
+    </div>
+{% endif %}
+<table>
+    <tr height="40" style="border:2px solid black">
+        <th width="400">*Todo name</th>
+        <th width="170">*Status</th>
+        <th width="170">*Published at </th>
+        <th width="170">*Deadline</th>
+    </tr>
+    
+    {% for todo in todos %}
+    
+        <tr height="25" style="border:2px solid black">
+            {% if todo.status == "completed" %}
+                <td width="400" title="{{todo.description}}"><del>{{ todo.todo }}</del></td>
+                <td width="170" padding="3" class="alert alert-success">{{ todo.status }}</td>
+                <td width="170"><del>{{ todo.publish_date }}</del></td>
+                <td width="200" padding="3" class="alert alert-success"><del>{{ todo.deadline }}</del></td>
+                <td width="40"><a href="{% url 'todo_delete' todo.slug %}"><i class="fa fa-minus"></i></a></td>
+            {% elif todo.status == "missed" %}
+                <td width="400" title="{{todo.description}}"><del>{{ todo.todo }}</del></td>
+                <td width="170" padding="3" class="alert alert-danger">{{ todo.status }}</td>
+                <td width="170"><del>{{ todo.publish_date }}</del></td>
+                <td width="200" padding="3" class="alert alert-danger"><del>{{ todo.deadline }}</del></td>
+                <td width="40"><a href="{% url 'todo_delete' todo.slug %}"><i class="fa fa-minus"></i></a></td>
+            {% else %}
+            <td width="400" title="{{todo.description}}">{{ todo.todo }}</td>
+                <td width="170" padding="3" class="alert alert-warning">{{ todo.status }}</td>
+                <td width="170">{{ todo.publish_date }}</td>
+                <td width="200" padding="3" class="alert alert-warning">{{ todo.deadline }}</td>
+                <td width="40"><a href="{% url 'todo_delete' todo.slug %}"><i class="fa fa-minus"></i></a></td>
+                <td width="40"><a href="{% url 'todo_update' todo.slug %}"><i class="fa fa-pencil"></i></a></td>
+                {% endif %}
+            </tr>
+        
+    {%  endfor %}
+</table>
+{% endblock %}
