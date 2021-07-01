@@ -10,14 +10,17 @@ class TodosList(ListView):
     model = Todos
     template_name = 'todos.html'
     context_object_name = 'todos'
-    ordering = ['deadline'] 
+    ordering = ['-deadline'] 
+
 class TodosView(View):
     def get(self, request, *args, **kwargs):
         now = datetime.now()
         todos = Todos.objects.filter(author_id=self.request.user.id).order_by('-deadline')
         for todo in todos:
-            if todo.deadline < timezone.now():
+            if todo.deadline > timezone.now():
                 todo.status = 'missed'
+            else:
+                todo.status = 'not completed'
         context = {
             'todos':todos
         }
